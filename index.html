@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="title.png" type="image/png">
+    
+    <title>My-Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .social-icons span {
+            font-size: 25px; /* Adjust size */
+            margin:0 0.5px;  /* Space between icons */
+            transition: transform 0.3s; /* Add a hover effect */
+        }
+
+        .social-icons span:hover {
+            transform: scale(1.2); /* Enlarge on hover */
+        }
+        .project-item 
+        {
+            width: 550px; /* Adjust width as needed */
+            height: auto; /* Adjust height as needed, or set a fixed height */
+            padding: 20px; /* Optional: add padding for spacing */
+            background-color: #333; /* Optional: add a background color */
+            border-radius: 8px; /* Optional: add rounded corners */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add shadow */
+            display: inline-block; /* Helps to contain the video box */
+        }
+
+/* Adjust video element within the container */
+        .project-item video 
+        {
+            width: 100%; /* Make the video fill the container */
+            height: auto; /* Keep the aspect ratio */
+            border-radius: 5px; /* Optional: add rounded corners */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Karthiban CM</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="Resume.pdf">Resume</a>
+            <a href="#projects">Projects</a>
+            <a href="About.html">About</a>
+        </nav>
+    </header>
+    <br><br>
+    <section id="intro">
+        <h2>Karthiban Chandru</h2>
+        <p>An Aspiring game programmer who enjoys writing effective and well-organized code. I am passionate about programming and game development. I'm always eager to learn and leverage my skills.</p>
+        <br>
+        <div class="social-icons">
+            
+            <a href="https://www.linkedin.com/in/%20karthiban-c-m-27529a268" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                <span class="fab fa-linkedin fa-fw"></span>
+                <!--<span class="fab fa-github fa-fw fa-2x"></span>-->
+            </a>
+            <a href="mailto:karthiban2211@gmail.com" title="Email">
+                <span class="fas fa-envelope fa-fw"></span>
+            </a>
+        </div>
+        <!--<button onclick="location.href='#projects'">Projects</button>-->
+    </section>
+    <br><br>
+    <section id="projects">
+        <h2 style="color:#A9A9B3;">Projects</h2>
+        <!--<div class="project-note">
+            <p>Note: You can visit my <a href="https://github.com/" target="_blank">GitHub</a> to see more interesting projects.</p>
+        </div>-->
+        <div class="project-list">
+            <div class="project-item">
+                
+                <video width="620" height="440" autoplay muted loop>
+                    <source src="BladeFall Mixed.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+
+                </video>
+                
+
+
+                <h3>BladeFall</h3>
+                <p>BladeFall is a 2D Top Down Shooter game made in Unity for PC,
+                    featuring player-versus-enemy combat.</p>
+                <a href="Shooter.html">Read more...</a>
+            </div>
+            <div class="project-item">
+                <video width="320" height="240" autoplay muted loop>
+                    <source src="Cubethon.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <h3>Cubethon</h3>
+                <p>Cubethon is a simple 3D Cube running game made in Unity Engine for PC where Player needs to get to the Finish Line.</p>
+                <a href="Cube.html">Read more...</a>
+            </div>
+            <!-- Add more projects here as needed -->
+        </div>
+    </section>
+</body>
+</html>
