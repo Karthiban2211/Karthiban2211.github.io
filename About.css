@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    background-color:  #292A2D;   
+    line-height: 1.6;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #252627 ;
+    color: #A9A9B3;
+    flex-wrap: wrap;
+    
+}
+
+header h1 {
+    font-size: 24px;
+    padding-left:20px;
+
+}
+
+nav a {
+    color: #A9A9B3;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#intro {
+    
+    color: #A9A9B3;
+    padding: 20px; /* Padding around main content */
+    margin: auto; /* Center align main content */
+    max-width: 800px; /* Limit width for readability */
+    text-align: left; /* Left align text in main content */
+    text-align: justify;
+}
+.text-justified {
+    text-align: justify;
+}
+#intro h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align:right;
+    color: #A9A9B3;
+
+
+}
+#intro h3 {
+   
+    color: #A9A9B3;
+}
+#intro strong {
+   
+    color: #fff;
+}
+#intro p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+
+
+button {
+    padding: 10px 20px;
+    border: none;
+    color: #fff;
+    background-color: #444;
+    cursor: pointer;
+}
+
+
+
+footer {
+    align-items: center; /* Centers content vertically */
+    padding-top: 150px;
+
+    color: white;
+}
+
+
+@media (max-width: 768px) {
+    header h1{
+        font-size: 22px; /* Adjust for tablets */
+    }
+    
+    
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 18px; /* Adjust for mobile */
+    }
+    nav{
+        /*flex-wrap: wrap;  Allows items to wrap to the next line */
+        /*gap: 10px;  Adds spacing between items */
+        padding-top:20px;
+        display: flex;
+        justify-content: space-between;
+        flex-basis: 95%;
+        font-size:16px;
+    }
+    #intro h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        text-align:right;
+    
+    }
+    #intro h3 {
+        font-size: 16px;
+        
+    
+    }
+    #intro p {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    #intro {
+    
+        margin: auto; /* Center align main content */
+        max-width: 320px; /* Limit width for readability */
+        text-align: left; /* Left align text in main content */
+        text-align: justify;
+        
+    }
+    
+    
+}
