@@ -129,7 +129,7 @@ footer {
     #intro {
     
         margin: auto; /* Center align main content */
-        max-width: 320px; /* Limit width for readability */
+        max-width: 350px; /* Limit width for readability */
         text-align: left; /* Left align text in main content */
         text-align: justify;
         
