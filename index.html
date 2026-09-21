@@ -1,0 +1,2867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.M. Karthiban | Unity Game Developer Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'bebas': ['"Bebas Neue"', 'sans-serif'],
+                        'mono': ['"JetBrains Mono"', 'monospace'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'ap-bg': '#050809',
+                        'ap-panel': '#0c1418',
+                        'ap-red': '#ff0055',
+                        'ap-blue': '#1C6FC2',
+                        'ap-yellow': '#FFC857',
+                        'ap-cyan': '#4DC3FF',
+                        'ap-purple': '#B98BFF',
+                        'ap-orange': '#FF7A4D',
+                        'ap-white': '#EAF3F8',
+                        'ap-green': '#6EE7C8'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --cur-default: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FFC857'/%3E%3Cstop offset='50%25' stop-color='%23FF6F91'/%3E%3Cstop offset='100%25' stop-color='%234DC3FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2 1 L2 20 L7 15.5 L10.5 22.5 L13.5 21 L10 14 L16.5 14 Z' fill='url(%23g1)' stroke='%23000000' stroke-width='1.1' stroke-linejoin='round'/%3E%3C/svg%3E") 2 1, auto;
+            --cur-hover: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FF6F91'/%3E%3Cstop offset='50%25' stop-color='%23B98BFF'/%3E%3Cstop offset='100%25' stop-color='%234DC3FF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M9 4.5c0-.9.7-1.6 1.6-1.6s1.6.7 1.6 1.6v5.3l1-.2c0-1 .7-1.8 1.7-1.8s1.7.8 1.7 1.8v.3l.7-.1c.9 0 1.7.8 1.7 1.7v3.4c0 3.3-2.5 6-5.8 6h-1.8c-2 0-3.3-.7-4.4-2.3l-2.8-4c-.5-.7-.3-1.7.4-2.2.7-.4 1.6-.3 2.1.3l1.1 1.3V4.5Z' fill='url(%23g2)' stroke='%23000000' stroke-width='1' stroke-linejoin='round'/%3E%3C/svg%3E") 11 4, pointer;
+        }
+
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--ap-bg);
+            color: #ffffff;
+            cursor: var(--cur-default);
+            overflow-x: hidden;
+        }
+
+        a, button, .hoverable { cursor: var(--cur-hover); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050809; }
+        ::-webkit-scrollbar-thumb { background: #1C6FC2; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4DC3FF; }
+
+        /* Background Noise Overlay */
+        .noise-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.035;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        .gradient-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+            background: linear-gradient(180deg, #0c1418 0%, #050809 100%);
+        }
+
+        /* Navigation Links */
+        .nav-link {
+            color: rgba(234, 243, 248, 0.75);
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #FFC857;
+        }
+
+        /* Water Text Hover Filter */
+        .water-effect-active {
+            filter: url(#water-ripple);
+        }
+
+        /* Rocket Launch Animation */
+        .rocket-outer-wrapper {
+            transition: transform 1.2s cubic-bezier(0.5, 0, 0.2, 1);
+        }
+
+        .launching .rocket-outer-wrapper {
+            transform: translateY(1200px);
+        }
+
+        .launching .rocket-flame {
+            opacity: 1 !important;
+            animation: flame-flicker 0.1s infinite alternate;
+        }
+
+        @keyframes flame-flicker {
+            0% {
+                filter: brightness(1) drop-shadow(0 0 5px #ff7a4d);
+                transform: scaleY(1);
+            }
+
+            100% {
+                filter: brightness(1.5) drop-shadow(0 0 15px #ff0055);
+                transform: scaleY(1.3);
+            }
+        }
+
+        /* UI Elements */
+        .exp-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .exp-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.8);
+        }
+
+        .skill-tag {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 10px;
+            border-radius: 3px;
+            font-size: 12.5px;
+            line-height: 1.2;
+            transition: border-color 0.3s ease;
+        }
+
+        /* Tabs System */
+        .tab-btn {
+            background: transparent;
+            color: rgba(255,255,255,0.5);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+        }
+        
+        .active-tab {
+            background: var(--project-accent) !important;
+            color: #000 !important;
+            font-weight: bold;
+            border-color: var(--project-accent) !important;
+        }
+
+        .play-game-btn {
+            background: var(--project-accent);
+            color: #000;
+            box-shadow: 0 0 20px var(--project-accent-glow);
+            transition: all 0.3s ease;
+        }
+
+        .play-game-btn:hover {
+            filter: brightness(1.2);
+            transform: scale(1.02);
+        }
+
+        /* ----------------------------------------------------
+           VIDEO SYSTEM
+        ---------------------------------------------------- */
+
+        .portfolio-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+            display: block;
+        }
+
+        .video-wrapper {
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /*
+         * One fixed overall mute button.
+         * It stays visible while scrolling.
+         */
+        .global-video-mute-btn {
+            position: fixed;
+            top: 78px;
+            right: 16px;
+            z-index: 150;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            border-radius: 5px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+            transition: all 0.2s ease;
+        }
+
+        .global-video-mute-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.65);
+            transform: translateY(-1px);
+        }
+
+        .global-video-mute-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .video-status {
+            position: absolute;
+            left: 14px;
+            bottom: 14px;
+            z-index: 20;
+            padding: 5px 8px;
+            background: rgba(0, 0, 0, 0.65);
+            color: rgba(255, 255, 255, 0.6);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            pointer-events: none;
+        }
+
+        .gameplay-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .gameplay-player {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gameplay-player .portfolio-video {
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 768px) {
+
+            .tab-btn {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+                font-size: 9px !important;
+            }
+
+            .global-video-mute-btn {
+                width: 40px;
+                height: 40px;
+                top: 70px;
+                right: 12px;
+            }
+
+            .video-status {
+                left: 10px;
+                bottom: 10px;
+                font-size: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased selection:bg-ap-yellow selection:text-black">
+
+    <!-- Global Backgrounds -->
+    <div class="gradient-bg"></div>
+    <div class="noise-bg"></div>
+
+    <!-- Invisible SVG for the Water Effect -->
+    <svg style="width:0; height:0; position:absolute; z-index:-1;">
+        <filter id="water-ripple" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence id="water-turbulence" type="fractalNoise" baseFrequency="0.01 0.03" numOctaves="2" result="noise" />
+            <feDisplacementMap id="water-displacement" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+    <!-- Fixed Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-[100] bg-black/80 backdrop-blur-md border-b border-white/10 px-6 md:px-10 py-4 flex justify-between items-center">
+        <a href="#home" class="font-bebas text-3xl tracking-[0.08em] text-white">KCM</a>
+        <!-- <a href="#home" class="font-bebas text-3xl tracking-[0.08em] text-white">KCM<span class="text-ap-yellow">®</span></a> -->
+        
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-6 font-mono text-[11px] lg:text-xs tracking-[0.2em] uppercase">
+            <a href="#home" class="nav-link active scroll-link">HOME</a>
+            <a href="#expertise" class="nav-link scroll-link">SKILLS</a>
+            <a href="#professional" class="nav-link scroll-link">PROFESSIONAL</a>
+            <a href="#games" class="nav-link scroll-link">GAMES</a>
+            <a href="#about" class="nav-link scroll-link">ABOUT</a>
+
+            <!-- Resume Link -->
+            <a href="Karthiban_Resume_18-07.pdf" target="_blank" class="nav-link text-ap-cyan hover:text-white flex items-center gap-1">
+                RESUME 
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17l9.2-9.2M17 17V7H7"/>
+                </svg>
+            </a>
+        </nav>
+        
+        <!-- Mobile Menu Placeholder -->
+        <button class="md:hidden text-ap-yellow">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </header>
+
+
+    <!-- ========================================================
+         GLOBAL VIDEO MUTE
+         ======================================================== -->
+
+    <button
+        id="global-video-mute"
+        type="button"
+        class="global-video-mute-btn"
+        aria-label="Mute all videos"
+        title="Mute / Unmute all videos">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19 9a5 5 0 0 1 0 6"></path>
+            <path d="M22 6a9 9 0 0 1 0 12"></path>
+        </svg>
+
+    </button>
+
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative w-full h-screen min-h-[700px] flex flex-col items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0 bg-[url('image_15ea6c.jpg')] bg-cover bg-center opacity-30"></div>
+        <div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-ap-bg/80 to-ap-bg"></div>
+        
+        <div class="relative z-10 flex flex-col items-center text-center px-4">
+            <div class="font-mono text-xs md:text-sm tracking-[0.4em] text-gray-300 mb-4">> WELCOME, GUEST</div>
+            
+            <!-- Target for the water effect -->
+            <h1 id="hero-name" class="font-bebas font-normal text-6xl md:text-8xl lg:text-[100px] leading-[0.85] tracking-wide text-gray-200 mb-6 transition-all duration-300 px-4 py-2 cursor-default">
+                KARTHIBAN <span class="text-ap-red">CHANDRU</span>
+            </h1>
+            
+            <div class="flex items-center gap-4 md:gap-6 mt-4 opacity-80">
+                <svg class="text-gray-500 w-12 h-3 md:w-20 md:h-4" viewBox="0 0 100 20" fill="currentColor">
+                    <path d="M0,9 L80,9 L90,3 L90,17 L80,11 L0,11 Z M85,0 L95,0 L95,20 L85,20 Z M95,8 L100,10 L95,12 Z" />
+                </svg>
+
+                <div class="font-mono text-sm md:text-base tracking-[0.4em] text-gray-200">
+                    UNITY GAME DEVELOPER
+                </div>
+
+                <svg class="text-gray-500 w-12 h-3 md:w-20 md:h-4 rotate-180" viewBox="0 0 100 20" fill="currentColor">
+                    <path d="M0,9 L80,9 L90,3 L90,17 L80,11 L0,11 Z M85,0 L95,0 L95,20 L85,20 Z M95,8 L100,10 L95,12 Z" />
+                </svg>
+            </div>
+
+            <div class="font-mono text-[14px] md:text-[14px] tracking-[0.2em] text-gray-300 mt-5">
+                BACHELOR OF COMPUTER SCIENCE AND ENGINEERING · 2020–2024
+            </div>
+            
+            <!-- ROCKET LAUNCH BUTTON -->
+            <a href="#professional" id="rocket-launch-btn" class="group mt-16 flex flex-col items-center justify-center gap-4 decoration-none">
+
+                <!-- Circular Border -->
+                <div class="relative w-20 h-20 border border-gray-600 rounded-full flex items-center justify-center bg-transparent group-hover:border-ap-red transition-all shadow-none group-hover:shadow-[0_0_20px_rgba(255,0,85,0.2)]">
+                    
+                    <!-- Outer wrapper translates down -->
+                    <div class="rocket-outer-wrapper absolute inset-0 flex items-center justify-center z-10">
+
+                        <!-- Inner wrapper points the rocket downwards (180deg) -->
+                        <div class="rocket-inner transform rotate-180 flex flex-col items-center relative">
+
+                            <!-- Standard Upright Rocket Vector -->
+                            <svg class="rocket-svg text-gray-300 group-hover:text-ap-red w-8 h-8 transition-colors relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+                                <path d="m12 15-3-3a22 22 0 0 1 3.81-12.56c.35-.49.9-.49 1.25 0A22 22 0 0 1 17.87 9c.14.3.18.63.13.95l-.13.84"></path>
+                                <path d="M19 11c1 1.13 4 5 4 5s-3.74.5-5 2"></path>
+                                <path d="M9 13.5v5"></path>
+                                <path d="M15 15v5"></path>
+                            </svg>
+
+                            <!-- Fire Thruster Vector -->
+                            <svg class="rocket-flame absolute -bottom-6 opacity-0 w-6 h-8 origin-top text-orange-500 transition-opacity duration-200 z-0" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 22C12 22 7 15 7 10C7 5 12 0 12 0C12 0 17 5 17 10C17 15 12 22 12 22Z" fill="#ff7a4d"/>
+                                <path d="M12 18C12 18 9 13 9 9C9 5 12 3 12 3C12 3 15 5 15 9C15 13 12 18 12 18Z" fill="#FFC857"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Button Label -->
+                <span class="font-mono text-xs tracking-[0.2em] text-gray-500 group-hover:text-white transition-colors">PRESS START</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- EXPERTISE SECTION -->
+    <section id="expertise" class="relative py-24 px-6 md:px-10 max-w-[1400px] mx-auto z-10">
+        <h2 class="font-bebas text-4xl md:text-5xl tracking-[0.06em] text-center mb-16">SKILLS</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- Card 01 -->
+            <div class="exp-card bg-[#0c1418] border border-white/5 rounded-sm p-6 shadow-[inset_0_2px_0_rgba(77,195,255,0.8)]">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <h3 class="font-bebas text-2xl tracking-wide text-ap-cyan mb-4">UNITY & GAME DEVELOPMENT</h3>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag hover:border-[#4DC3FF]">Unity 2D/3D</span>
+                    <span class="skill-tag hover:border-[#4DC3FF]">Gameplay Programming</span>
+                    <span class="skill-tag hover:border-[#4DC3FF]">Game Logic</span>
+                    <span class="skill-tag hover:border-[#4DC3FF]">Player Systems</span>
+                    <span class="skill-tag hover:border-[#4DC3FF]">Animation</span>
+                    <span class="skill-tag hover:border-[#4DC3FF]">Physics</span>
+                    <span class="skill-tag hover:border-[#4DC3FF]">Cinemachine</span>
+                </div>
+            </div>
+
+            <!-- Card 02 -->
+            <div class="exp-card bg-[#0c1418] border border-white/5 rounded-sm p-6 shadow-[inset_0_2px_0_rgba(255,200,87,0.8)]">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <h3 class="font-bebas text-2xl tracking-wide text-ap-yellow mb-4">CORE PROGRAMMING</h3>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag hover:border-[#FFC857]">C#</span>
+                    <span class="skill-tag hover:border-[#FFC857]">Object-Oriented Programming</span>
+                    <span class="skill-tag hover:border-[#FFC857]">Data Structures & Algorithms</span>
+                    <span class="skill-tag hover:border-[#FFC857]">Modular & Maintainable Code</span>
+                    <span class="skill-tag hover:border-[#FFC857]">Code Refactoring</span>
+                    <span class="skill-tag hover:border-[#FFC857]">Debugging & Error Handling</span>
+                </div>
+            </div>
+
+            <!-- Card 03 -->
+            <div class="exp-card bg-[#0c1418] border border-white/5 rounded-sm p-6 shadow-[inset_0_2px_0_rgba(255,0,85,0.8)]">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <h3 class="font-bebas text-2xl tracking-wide text-ap-red mb-4">MULTIPLAYER</h3>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag hover:border-[#ff0055]">Netcode for GameObjects (NGO)</span>
+                    <span class="skill-tag hover:border-[#ff0055]">Unity Multiplayer Services</span>
+                    <span class="skill-tag hover:border-[#ff0055]">Lobby</span>
+                    <span class="skill-tag hover:border-[#ff0055]">Relay</span>
+                    <span class="skill-tag hover:border-[#ff0055]">NetworkVariables & RPCs</span>
+                    <span class="skill-tag hover:border-[#ff0055]">Player Synchronization</span>
+                    <span class="skill-tag hover:border-[#ff0055]">Networked Movement & Animation</span>
+                    <span class="skill-tag hover:border-[#ff0055]">Client-Server Gameplay</span>
+                </div>
+            </div>
+
+            <!-- Card 04 -->
+            <div class="exp-card bg-[#0c1418] border border-white/5 rounded-sm p-6 shadow-[inset_0_2px_0_rgba(110,231,200,0.8)]">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <h3 class="font-bebas text-2xl tracking-wide text-ap-green mb-4">VR DEVELOPMENT</h3>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag hover:border-[#6EE7C8]">Unity VR</span>
+                    <span class="skill-tag hover:border-[#6EE7C8]">VR Interaction</span>
+                    <span class="skill-tag hover:border-[#6EE7C8]">Trigger-Based Events</span>
+                    <span class="skill-tag hover:border-[#6EE7C8]">Spatial Audio</span>
+                    <span class="skill-tag hover:border-[#6EE7C8]">Object Physics </span>
+                    <span class="skill-tag hover:border-[#6EE7C8]">VR Optimization</span>
+                </div>
+            </div>
+
+            <!-- Card 05 -->
+            <div class="exp-card bg-[#0c1418] border border-white/5 rounded-sm p-6 shadow-[inset_0_2px_0_rgba(185,139,255,0.8)]">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <h3 class="font-bebas text-2xl tracking-wide text-ap-purple mb-4">TOOLS</h3>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag hover:border-[#B98BFF]">Git & GitHub</span>
+                    <span class="skill-tag hover:border-[#B98BFF]">Visual Studio</span>
+                    <span class="skill-tag hover:border-[#B98BFF]">Notion</span>
+                    <span class="skill-tag hover:border-[#B98BFF]">Blender</span>
+                    <span class="skill-tag hover:border-[#B98BFF]">Photoshop</span>
+                    <span class="skill-tag hover:border-[#B98BFF]">Illustrator</span>
+                    <span class="skill-tag hover:border-[#B98BFF]">Premiere Pro</span>
+                </div>
+            </div>
+
+            <!-- Card 06 -->
+            <div class="exp-card bg-[#0c1418] border border-white/5 rounded-sm p-6 shadow-[inset_0_2px_0_rgba(156,163,175,0.8)]">
+                <div class="flex items-baseline gap-3 mb-4">
+                    <h3 class="font-bebas text-2xl tracking-wide text-gray-300 mb-4">FOCUS AREAS</h3>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-tag hover:border-gray-400">Player Interaction</span>
+                    <span class="skill-tag hover:border-gray-400">Networked Gameplay</span>
+                    <span class="skill-tag hover:border-gray-400">Animation Systems</span>
+                    <span class="skill-tag hover:border-gray-400">Debugging</span>
+                    <span class="skill-tag hover:border-gray-400">Performance Optimization</span>
+                    <span class="skill-tag hover:border-gray-400">Modular C# Systems</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    
+
+    <!-- PROFESSIONAL SECTION (Fixed Colors) -->
+    <section id="professional" class="relative py-24 px-6 md:px-10 max-w-[1300px] mx-auto z-10">
+        <h2 class="font-bebas text-4xl md:text-5xl tracking-[0.06em] text-center mb-16">PROFESSIONAL</h2>
+        
+        <div class="project-card border border-[#B98BFF]/30 rounded shadow-xl bg-black overflow-hidden" style="--project-accent: #B98BFF; --project-accent-glow: rgba(185,139,255,0.4);">
+
+            <div class="relative h-[300px] md:h-[400px] w-full flex items-center justify-center overflow-hidden border-b border-[#B98BFF]/30 group">
+                <img src="assets/images/vr_Cover.jpg" alt="Xenofables VR Game" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                
+                <div class="absolute top-6 left-6 font-bebas text-3xl text-[#B98BFF]">01</div>
+                
+                <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                    <div>
+                        <h3 class="font-bebas text-4xl md:text-4xl tracking-wider text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">Freelance VR Game Developer | Xenofables</h3>
+                        <p class="font-mono text-xs tracking-[0.1em] text-[#B98BFF] mt-2">UNITY ENGINE  · C# · VR GAME DEVELOPMENT</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex border-b border-[#B98BFF]/20 bg-[#0a0c0d]">
+                <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="pro-overview">OVERVIEW</button>
+                <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="pro-trailer">TRAILER</button>
+                <button class="tab-btn active-tab font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="pro-tech">TECHNICAL BREAKDOWN</button>
+            </div>
+
+            <div class="p-8 min-h-[200px] bg-[#111314]">
+
+                <div id="pro-overview" class="tab-content hidden text-gray-300 text-sm md:text-base leading-relaxed max-w-4xl">
+                    <p>BabyVR is an urban action-adventure FPS VR project featuring open-world exploration, objective-based missions, and interactive environments. I contributed as a Freelance VR Game Developer from September 2025 to May 2026, developing and optimizing immersive VR gameplay using Unity and C#, with modular systems for environmental interactions and world immersion.</p>
+                </div>
+
+                <div id="pro-trailer" class="tab-content hidden">
+
+                    <div class="video-wrapper aspect-video max-w-3xl mx-auto border border-[#B98BFF]/30">
+
+                        <video
+                            id="pro-trailer-video"
+                            class="portfolio-video"
+                            playsinline
+                            preload="metadata"
+                            controls
+                            data-video-type="trailer"
+                            data-user-activated="false"
+                            data-video-key="pro-trailer-video">
+
+                            <source src="assets/videos/Xenofables_Trailer.mp4" type="video/mp4">
+                          
+
+
+                        </video>
+
+                        <div class="video-status">BabyVR · TRAILER</div>
+
+                    </div>
+
+                </div>
+
+                <div id="pro-tech" class="tab-content">
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                        <div>
+                            <h4 class="font-bebas text-2xl text-white mb-4">CORE SYSTEMS</h4>
+
+                            <ul class="font-mono text-sm text-gray-400 space-y-2 list-disc pl-4 mb-6">
+                                <li>Immersive VR gameplay, environment interactions, and objective-based missions</li>
+                                <li>Open-world exploration systems and trigger-based events</li>
+                                <li>Spatial audio triggers and physics-driven object interactions</li>
+                                <li>VR gameplay optimization using Unity and C#</li>
+                            </ul>
+
+                            <!-- <img src="image_15ee66.jpg" alt="Xenofables Systems" class="w-full border border-gray-700 rounded shadow-lg"> -->
+                        </div>
+
+                        <div>
+                            <!-- <h4 class="font-bebas text-2xl text-white mb-4">GALLERY</h4> -->
+                            <!-- <img src="image_15ee89.jpg" alt="Xenofables Gallery" class="w-full border border-gray-700 rounded shadow-lg"> -->
+                        </div>
+
+                    </div>
+
+                    <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-8 tracking-widest md:hidden">VIEW PROJECT ▸</button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GAMES SECTION -->
+    <section id="games" class="relative py-24 px-6 md:px-10 max-w-[1300px] mx-auto z-10">
+        <h2 class="font-bebas text-4xl md:text-5xl tracking-[0.06em] text-center mb-16">GAMES</h2>
+        
+        <div class="flex flex-col gap-20">
+            
+            <!-- PROJECT 1: CONFUSION -->
+            <div class="project-card border border-[#ff0055]/30 rounded shadow-xl bg-black overflow-hidden" style="--project-accent: #ff0055; --project-accent-glow: rgba(255,0,85,0.4);">
+
+                <div class="relative h-[300px] md:h-[400px] w-full flex items-center justify-center overflow-hidden border-b border-[#ff0055]/30 group">
+                    
+                    
+                    <img src="assets/images/Confusion_Cover.jpg" alt="Confusion" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500">
+                    
+                    <!-- these two lines not allowing image to appear in confusion title  -->
+                    <!-- <div class="absolute inset-0 bg-gradient-to-br from-[#400015] to-[#120005]"></div>
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,0,85,0.2)_0%,transparent_70%)] animate-pulse"></div> -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+                    
+                    <div class="absolute top-6 left-6 font-bebas text-3xl text-[#ff0055]">01</div>
+                    <div class="absolute top-6 right-6 font-mono text-[15px] tracking-widest px-3 py-1 border border-[#ff0055] text-[#ff0055]  animate-blink">ONGOING PROJECT</div>
+                    
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <div>
+                            <h3 class="font-bebas text-5xl md:text-6xl tracking-wider text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">CONFUSION</h3>
+                            <p class="font-mono text-xs tracking-[0.1em] text-[#ff0055] mt-2">UNITY ENGINE · C# · MULTIPLAYER GAME</p>
+                        </div>
+
+                        <!-- <button class="play-game-btn font-bebas text-xl px-6 py-2 tracking-widest hidden md:block">VIEW PROJECT ▸</button> -->
+                    </div>
+                </div>
+
+                <div class="flex border-b border-[#ff0055]/20 bg-[#080304]">
+
+                    <button class="tab-btn active-tab font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="conf-overview">OVERVIEW</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="conf-trailer">TRAILER</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="conf-tech">TECHNICAL BREAKDOWN</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="conf-gameplay">GAMEPLAY VIDEOS</button>
+
+                </div>
+
+                <div class="p-8 min-h-[200px] bg-[#0c0506]">
+
+                    <div id="conf-overview" class="tab-content text-gray-300 text-sm md:text-base leading-relaxed max-w-4xl">
+                        <p class="mb-4"><span class="text-[#ff0055] font-semibold">Project Confusion</span> is a highly advanced action-system prototype featuring custom state-machine AI, kinematic physics, and an interactive environment.</p>
+                        <p>Currently in active development, the focus is on establishing a robust, modular code foundation allowing for rapidly scalable combat encounters and dynamic environmental shifting.</p>
+                        <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button>
+                    </div>
+
+                    <div id="conf-trailer" class="tab-content hidden">
+
+                        <div class="video-wrapper aspect-video max-w-3xl mx-auto bg-black border border-[#ff0055]/30">
+
+                            <video
+                                id="conf-trailer-video"
+                                class="portfolio-video"
+                                playsinline
+                                preload="metadata"
+                                controls
+                                data-video-type="trailer"
+                                data-user-activated="false"
+                                data-video-key="conf-trailer-video">
+
+                                <source src="assets/videos/Confusion_Trailer.mp4" type="video/mp4">
+
+                            </video>
+
+                            <div class="video-status">CONFUSION · TRAILER</div>
+
+                        </div>
+
+                    </div>
+
+                    <div id="conf-tech" class="tab-content hidden">
+                        <ul class="list-disc pl-5 font-mono text-sm text-gray-400 space-y-2">
+                            <li>Netcode for GameObjects (NGO) with Unity Multiplayer Services</li>
+                            <li>Lobby and Relay connectivity with NetworkVariables and RPCs</li>
+                            <li>Networked player movement, animation and multiplayer synchronization</li>
+                        </ul>
+                    </div>
+
+                    <div id="conf-gameplay" class="tab-content hidden">
+
+                        <div class="relative w-full aspect-video max-w-4xl mx-auto bg-black border border-[#ff0055]/30 flex items-center justify-center overflow-hidden">
+
+                            <button onclick="prevVideo('conf')" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#ff0055] text-4xl z-10 transition-colors">❮</button>
+
+                            <div id="conf-vid-player" class="gameplay-player font-mono text-[#ff0055] text-sm text-center px-12">
+
+                                <video
+                                    id="conf-gameplay-video"
+                                    class="portfolio-video gameplay-video"
+                                    playsinline
+                                    preload="metadata"
+                                    controls
+                                    data-video-type="gameplay"
+                                    data-game-id="conf"
+                                    data-user-activated="false"
+                                    data-video-key="conf">
+
+                                </video>
+
+                                <div class="video-status">CONFUSION · GAMEPLAY</div>
+
+                            </div>
+
+                            <button onclick="nextVideo('conf')" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#ff0055] text-4xl z-10 transition-colors">❯</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 2: CHECKMATE -->
+            <div class="project-card border border-[#1C6FC2]/30 rounded shadow-xl bg-black overflow-hidden" style="--project-accent: #1C6FC2; --project-accent-glow: rgba(28,111,194,0.4);">
+
+                <div class="relative h-[300px] md:h-[400px] w-full flex items-center justify-center overflow-hidden border-b border-[#1C6FC2]/30 group">
+
+                    <img src="assets/images/CheckMate_Cover.jpg" alt="CheckMate Crown and Conquer" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500">
+                    
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                    
+                    <div class="absolute top-6 left-6 font-bebas text-3xl text-[#4DC3FF]">02</div>
+                    
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <div>
+                            <h3 class="font-bebas text-5xl md:text-6xl tracking-wider text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">CHECKMATE</h3>
+                            <p class="font-mono text-xs tracking-[0.1em] text-[#4DC3FF] mt-2">UNITY ENGINE · C# · 3D CHESS</p>
+                        </div>
+
+                        <!-- <button class="play-game-btn font-bebas text-xl px-6 py-2 tracking-widest hidden md:block">VIEW PROJECT ▸</button> -->
+                    </div>
+                </div>
+
+                <div class="flex border-b border-[#1C6FC2]/20 bg-[#04080c]">
+
+                    <button class="tab-btn active-tab font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="cluck-overview">OVERVIEW</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="cluck-trailer">TRAILER</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="cluck-tech">TECHNICAL BREAKDOWN</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="cluck-gameplay">GAMEPLAY VIDEOS</button>
+
+                </div>
+
+                <div class="p-8 min-h-[200px] bg-[#060a0f]">
+
+                    <div id="cluck-overview" class="tab-content text-gray-300 text-sm md:text-base leading-relaxed max-w-4xl">
+                        <p class="mb-4">CheckMate: Crown and Conquer is a stylized 3D chess game featuring animated, character-based pieces with unique attack styles.</p>
+                        <p><span class="text-[#4DC3FF] font-semibold">What makes it different:</span> implemented chess rules, legal movement, capturing, turn and victory logic, along with custom visual and interaction systems for animated gameplay.</p>
+                        <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button>
+                    </div>
+
+                    <div id="cluck-trailer" class="tab-content hidden">
+
+                        <div class="video-wrapper aspect-video max-w-3xl mx-auto bg-black border border-[#1C6FC2]/30">
+
+                            <video
+                                id="cluck-trailer-video"
+                                class="portfolio-video"
+                                playsinline
+                                preload="metadata"
+                                controls
+                                data-video-type="trailer"
+                                data-user-activated="false"
+                                data-video-key="cluck-trailer-video">
+
+                                <source src="assets/videos/CheckMate_Trailer.mp4" type="video/mp4">
+
+                            </video>
+
+                            <div class="video-status">CHECKMATE · TRAILER</div>
+
+                        </div>
+
+                    </div>
+
+                    <div id="cluck-tech" class="tab-content hidden">
+                        <p class="font-mono text-gray-400">Chess rules, legal move validation and victory conditions; modular move validation, pathfinding and capturing logic; Unity Animator for animated character-based chess pieces; Cinemachine and custom camera scripts for gameplay tracking; custom scripts for visual and interaction systems.</p>
+                    </div>
+
+                    <div id="cluck-gameplay" class="tab-content hidden">
+
+                        <div class="relative w-full aspect-video max-w-4xl mx-auto bg-black border border-[#1C6FC2]/30 flex items-center justify-center overflow-hidden">
+
+                            <button onclick="prevVideo('cluck')" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#4DC3FF] text-4xl z-10 transition-colors">❮</button>
+
+                            <div id="cluck-vid-player" class="gameplay-player font-mono text-[#4DC3FF] text-sm text-center px-12">
+
+                                <video
+                                    id="cluck-gameplay-video"
+                                    class="portfolio-video gameplay-video"
+                                    playsinline
+                                    preload="metadata"
+                                    controls
+                                    data-video-type="gameplay"
+                                    data-game-id="cluck"
+                                    data-user-activated="false"
+                                    data-video-key="cluck">
+
+                                </video>
+
+                                <div class="video-status">CHECKMATE · GAMEPLAY</div>
+
+                            </div>
+
+                            <button onclick="nextVideo('cluck')" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#4DC3FF] text-4xl z-10 transition-colors">❯</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 3: BLADEFALL -->
+            <div class="project-card border border-[#FFC857]/30 rounded shadow-xl bg-black overflow-hidden" style="--project-accent: #FFC857; --project-accent-glow: rgba(255,200,87,0.4);">
+
+                <div class="relative h-[300px] md:h-[400px] w-full flex items-center justify-center overflow-hidden border-b border-[#FFC857]/30 group">
+
+                    <img src="assets/images/BladeFall_Cover.jpg" alt="BladeFall" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500">
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+                    
+                    <div class="absolute top-6 left-6 font-bebas text-3xl text-[#FFC857]">03</div>
+                    <div class="absolute top-6 right-6 font-mono text-lg text-[#FFC857]/80">2D TOP-DOWN SHOOTER</div>
+                    
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <div>
+                            <h3 class="font-bebas text-5xl md:text-6xl tracking-wider text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">BLADEFALL</h3>
+                            <p class="font-mono text-xs tracking-[0.1em] text-[#FFC857] mt-2">UNITY ENGINE · C# · 2D TOP-DOWN SHOOTER</p>
+                        </div>
+
+                        <!-- <button class="play-game-btn font-bebas text-xl px-6 py-2 tracking-widest hidden md:block">VIEW PROJECT ▸</button> -->
+                    </div>
+                </div>
+
+                <div class="flex border-b border-[#FFC857]/20 bg-[#0c0a04]">
+
+                    <button class="tab-btn active-tab font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="gl-overview">OVERVIEW</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="gl-trailer">TRAILER</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="gl-tech">TECHNICAL BREAKDOWN</button>
+
+                    <button class="tab-btn font-mono text-[11px] tracking-widest px-6 py-3 border-b-2" data-target="gl-gameplay">GAMEPLAY VIDEOS</button>
+
+                </div>
+
+                <div class="p-8 min-h-[200px] bg-[#110e06]">
+
+                    <div id="gl-overview" class="tab-content text-gray-300 text-sm md:text-base leading-relaxed max-w-4xl">
+                        <p class="mb-4">BladeFall is a 2D top-down shooting game made in Unity for PC, featuring player-versus-enemy combat.</p>
+                        <p><span class="text-[#FFC857] font-semibold">What makes it different:</span> focused on core gameplay programming, including player and enemy movement, projectile shooting, combat, animations, and health systems.</p>
+                        <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button>
+                    </div>
+
+                    <div id="gl-trailer" class="tab-content hidden">
+
+                        <div class="video-wrapper aspect-video max-w-3xl mx-auto bg-black border border-[#FFC857]/30">
+
+                            <video
+                                id="gl-trailer-video"
+                                class="portfolio-video"
+                                playsinline
+                                preload="metadata"
+                                controls
+                                data-video-type="trailer"
+                                data-user-activated="false"
+                                data-video-key="gl-trailer-video">
+
+                                <source src="assets/videos/BladeFall_Trailer.mp4" type="video/mp4">
+
+                            </video>
+
+                            <div class="video-status">BLADEFALL · TRAILER</div>
+
+                        </div>
+
+                    </div>
+
+                    <div id="gl-tech" class="tab-content hidden">
+                        <p class="font-mono text-gray-400">Player and enemy movement implemented in C#; projectile shooting and combat systems; player and enemy animation systems; health management for player and enemy; dynamic health bars.</p>
+                    </div>
+
+                    <div id="gl-gameplay" class="tab-content hidden">
+
+                        <div class="relative w-full aspect-video max-w-4xl mx-auto bg-black border border-[#FFC857]/30 flex items-center justify-center overflow-hidden">
+
+                            <button onclick="prevVideo('gl')" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#FFC857] text-4xl z-10 transition-colors">❮</button>
+
+                            <div id="gl-vid-player" class="gameplay-player font-mono text-[#FFC857] text-sm text-center px-12">
+
+                                <video
+                                    id="gl-gameplay-video"
+                                    class="portfolio-video gameplay-video"
+                                    playsinline
+                                    preload="metadata"
+                                    controls
+                                    data-video-type="gameplay"
+                                    data-game-id="gl"
+                                    data-user-activated="false"
+                                    data-video-key="gl">
+
+                                </video>
+
+                                <div class="video-status">BLADEFALL · GAMEPLAY</div>
+
+                            </div>
+
+                            <button onclick="nextVideo('gl')" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/50 hover:text-[#FFC857] text-4xl z-10 transition-colors">❯</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION (CREATIVE) -->
+    <section id="about" class="relative py-24 px-6 md:px-10 max-w-[1000px] mx-auto z-10">
+
+        <div class="border border-white/10 bg-[#0c1418] p-8 md:p-12 relative overflow-hidden shadow-2xl">
+
+            <!-- Terminal aesthetic accents -->
+            <div class="absolute top-0 right-0 bg-white/5 px-4 py-1 font-mono text-[10px] tracking-widest text-gray-500">LORE_ENTRY.TXT</div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#4DC3FF] via-[#ff0055] to-[#FFC857]"></div>
+            
+            <h2 class="font-bebas text-4xl md:text-5xl tracking-[0.06em] mb-6 text-white">PLAYER <span class="text-gray-500">LORE</span></h2>
+            
+            <div class="font-sans text-gray-300 leading-relaxed space-y-4 md:text-lg">
+
+                <p>I am a Unity Game Developer and Gameplay Programmer focused on building interactive game systems with C#. My work spans 2D, 3D, VR, and multiplayer development, with an emphasis on gameplay logic, player interaction, animation, physics, and modular code.</p>
+
+                <p>When I'm not building gameplay systems or debugging code, I enjoy analyzing game mechanics, exploring new development patterns, and turning ideas into interactive experiences.</p>
+
+            </div>
+            
+            <!-- Character Stats -->
+            <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 font-mono text-xs tracking-widest">
+
+                <div class="border border-white/5 p-4 bg-black/30 text-center">
+                    <span class="text-gray-500 block mb-1">CLASS</span>
+                    <span class="text-ap-yellow">GAME DEVELOPER</span>
+                </div>
+
+                <div class="border border-white/5 p-4 bg-black/30 text-center">
+                    <span class="text-gray-500 block mb-1">FACTION</span>
+                    <span class="text-[#ff0055]">UNITY</span>
+                </div>
+
+                <div class="border border-white/5 p-4 bg-black/30 text-center">
+                    <span class="text-gray-500 block mb-1">WEAPON</span>
+                    <span class="text-[#4DC3FF]">C#</span>
+                </div>
+
+                <div class="border border-white/5 p-4 bg-black/30 text-center">
+                    <span class="text-gray-500 block mb-1">STATUS</span>
+                    <span class="text-[#6EE7C8]">BUILDING</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+        <!-- ASSET DISCLAIMER -->
+    <div class="relative z-10 border-t border-white/5 bg-black/40 px-6 md:px-10 py-6 text-center">
+        <p class="font-mono text-[10px] md:text-xs leading-relaxed tracking-wide text-gray-500 max-w-4xl mx-auto">
+            These projects were developed for learning and portfolio showcase purposes.
+            Certain third-party assets are used for demonstration and prototyping only.
+            The projects have not been commercially released.
+            All third-party intellectual property remains the property of its respective owners.
+        </p>
+    </div>
+
+       
+    <!-- FOOTER & CONTACT -->
+    <footer class="relative z-10 border-t border-white/10 py-8 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center bg-black/80 gap-6">
+
+        <span class="font-mono text-[10px] tracking-widest text-gray-500">© 2026 C M KARTHIBAN </span>
+        
+        <!-- Minimal Contact Area -->
+        <div class="flex items-center gap-6">
+
+            <a href="mailto:karthiban2211@gmail.com" class="text-gray-500 hover:text-white transition-colors" aria-label="Email">
+
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+
+            </a>
+
+            <a href="https://www.linkedin.com/in/karthiban-cm-27529a268/" target="_blank" class="text-gray-500 hover:text-[#4DC3FF] transition-colors" aria-label="LinkedIn">
+
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+
+            </a>
+
+        </div>
+        
+        <a href="#home" class="font-mono text-[10px] tracking-widest text-gray-500 hover:text-white transition-colors">◂ BACK TO TITLE</a>
+
+    </footer>
+
+
+    <!-- ========================================================
+         INTERACTIVE SCRIPT
+         ======================================================== -->
+
+    <script>
+
+        // ============================================================
+        // GAMEPLAY VIDEOS
+        // ============================================================
+
+        const gameplayData = {
+
+            'conf': [
+                'assets/videos/Confusion_Gameplay_1.mp4',
+                'assets/videos/Confusion_Gameplay_2.mp4',
+                'assets/videos/Confusion_Gameplay_3.mp4'
+            ],
+
+            'cluck': [
+                'assets/videos/CheckMate_Gameplay_1.mp4',
+                'assets/videos/CheckMate_Gameplay_2.mp4',
+                'assets/videos/CheckMate_Gameplay_3.mp4',
+                'assets/videos/CheckMate_Gameplay_4.mp4',
+                'assets/videos/CheckMate_Gameplay_5.mp4'
+            ],
+
+            'gl': [
+                'assets/videos/BladeFall_Gameplay_1.mp4',
+                // 'assets/videos/BladeFall_Gameplay_2.mp4',
+                'assets/videos/BladeFall_Gameplay_2.mp4'
+            ]
+
+        };
+
+
+        const currentVideoIdx = {
+            'conf': 0,
+            'cluck': 0,
+            'gl': 0
+        };
+
+
+        // ============================================================
+        // GLOBAL AUDIO STATE
+        // ============================================================
+
+        /*
+         * IMPORTANT:
+         *
+         * false = globally UNMUTED
+         * true  = globally MUTED
+         *
+         * Starts unmuted as requested.
+         */
+        let globalMuted = false;
+
+
+        /*
+         * 25% volume.
+         *
+         * 0.25 = 25%
+         */
+        const DEFAULT_VIDEO_VOLUME = 0.25;
+
+
+        // ============================================================
+        // MANUAL PAUSE MEMORY
+        // ============================================================
+
+        /*
+         * Stores manual pause state for each video/source.
+         *
+         * Examples:
+         *
+         * CheckMate Gameplay 1 -> true
+         * CheckMate Gameplay 2 -> false
+         *
+         * So switching back to Gameplay 1 can remember
+         * that the user manually paused it.
+         */
+        const manualPauseMemory = new Map();
+
+
+        /*
+         * These WeakSets identify actions caused by our code.
+         *
+         * This prevents automatic scrolling/tab switching from
+         * being mistaken for a user's manual pause/mute action.
+         */
+        const internalPauseEvents = new WeakSet();
+        const internalMuteEvents = new WeakSet();
+
+
+        // ============================================================
+        // VIDEO MEMORY KEY
+        // ============================================================
+
+        function getVideoMemoryKey(video) {
+
+            if (!video) return null;
+
+            /*
+             * Gameplay videos use their current MP4 source.
+             */
+            if (
+                video.dataset.videoType ===
+                'gameplay'
+            ) {
+
+                return (
+                    video.dataset.gameId +
+                    '::' +
+                    (
+                        video.dataset.currentSource ||
+                        video.src
+                    )
+                );
+
+            }
+
+            /*
+             * Trailer videos use their own ID.
+             */
+            return (
+                video.dataset.videoKey ||
+                video.id
+            );
+
+        }
+
+
+        // ============================================================
+        // GET MANUAL PAUSE STATE
+        // ============================================================
+
+        function getManualPauseState(video) {
+
+            const key =
+                getVideoMemoryKey(video);
+
+            if (!key) return false;
+
+            return (
+                manualPauseMemory.get(key) ===
+                true
+            );
+
+        }
+
+
+        // ============================================================
+        // SET MANUAL PAUSE STATE
+        // ============================================================
+
+        function setManualPauseState(
+            video,
+            paused
+        ) {
+
+            const key =
+                getVideoMemoryKey(video);
+
+            if (!key) return;
+
+            manualPauseMemory.set(
+                key,
+                paused
+            );
+
+        }
+
+
+        // ============================================================
+        // SET VIDEO MUTE INTERNALLY
+        // ============================================================
+
+        function setVideoMutedInternally(
+            video,
+            muted
+        ) {
+
+            if (!video) return;
+
+            /*
+             * Tell volumechange handler that this was
+             * caused by our automatic system.
+             */
+            internalMuteEvents.add(video);
+
+            video.muted =
+                muted;
+
+        }
+
+
+        // ============================================================
+        // AUTOMATIC PAUSE
+        // ============================================================
+
+        function autoPauseVideo(video) {
+
+            if (!video) return;
+
+            /*
+             * Mark this pause as internal so the pause event
+             * does NOT become a manual pause.
+             */
+            internalPauseEvents.add(video);
+
+            video.pause();
+
+        }
+
+
+        // ============================================================
+        // APPLY GLOBAL MUTE STATE
+        // ============================================================
+
+        function applyGlobalMuteToVideo(
+            video,
+            shouldRespectAutoMute = false
+        ) {
+
+            if (!video) return;
+
+            /*
+             * If the video is supposed to be temporarily muted
+             * because it is off-screen, don't unmute it here.
+             */
+            if (shouldRespectAutoMute) {
+                return;
+            }
+
+            setVideoMutedInternally(
+                video,
+                globalMuted
+            );
+
+        }
+
+
+        // ============================================================
+        // GET MUTE ICON
+        // ============================================================
+
+        function getMuteIcon(isMuted) {
+
+            if (isMuted) {
+
+                return `
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                `;
+
+            }
+
+            return `
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19 9a5 5 0 0 1 0 6"></path>
+                    <path d="M22 6a9 9 0 0 1 0 12"></path>
+                </svg>
+            `;
+
+        }
+
+
+        // ============================================================
+        // UPDATE GLOBAL MUTE BUTTON
+        // ============================================================
+
+        function updateGlobalMuteButton() {
+
+            const button =
+                document.getElementById(
+                    'global-video-mute'
+                );
+
+            if (!button) return;
+
+            button.innerHTML =
+                getMuteIcon(globalMuted);
+
+            if (globalMuted) {
+
+                button.setAttribute(
+                    'aria-label',
+                    'Unmute all videos'
+                );
+
+                button.setAttribute(
+                    'title',
+                    'Unmute all videos'
+                );
+
+            } else {
+
+                button.setAttribute(
+                    'aria-label',
+                    'Mute all videos'
+                );
+
+                button.setAttribute(
+                    'title',
+                    'Mute all videos'
+                );
+
+            }
+
+        }
+
+
+        // ============================================================
+        // APPLY GLOBAL MUTE TO ALL VIDEOS
+        // ============================================================
+
+        function applyGlobalMuteToAllVideos() {
+
+            document
+                .querySelectorAll(
+                    '.portfolio-video'
+                )
+                .forEach(video => {
+
+                    /*
+                     * If a video is currently off-screen,
+                     * it should remain automatically muted anyway.
+                     * Applying the global state still keeps it
+                     * consistent for when it comes back.
+                     */
+                    setVideoMutedInternally(
+                        video,
+                        globalMuted
+                    );
+
+                });
+
+        }
+
+
+        // ============================================================
+        // PLAY VIDEO
+        // ============================================================
+
+        function playVideo(video) {
+
+            if (!video) return;
+
+            /*
+             * Always use global mute state.
+             *
+             * Therefore switching to another video never
+             * randomly resets mute/unmute.
+             */
+            setVideoMutedInternally(
+                video,
+                globalMuted
+            );
+
+            /*
+             * Keep sound mild.
+             */
+            video.volume =
+                DEFAULT_VIDEO_VOLUME;
+
+            const playPromise =
+                video.play();
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise.catch(() => {
+
+                    /*
+                     * Browser autoplay restrictions can reject
+                     * unmuted playback.
+                     *
+                     * Fallback to muted playback.
+                     *
+                     * This does NOT change globalMuted.
+                     */
+                    setVideoMutedInternally(
+                        video,
+                        true
+                    );
+
+                    const fallbackPromise =
+                        video.play();
+
+                    if (
+                        fallbackPromise !== undefined
+                    ) {
+
+                        fallbackPromise.catch(() => {});
+
+                    }
+
+                });
+
+            }
+
+        }
+
+
+        // ============================================================
+        // LOAD GAMEPLAY VIDEO
+        // ============================================================
+
+        function loadGameplayVideo(
+            gameId,
+            shouldPlay = false
+        ) {
+
+            const video =
+                document.getElementById(
+                    gameId +
+                    '-gameplay-video'
+                );
+
+            if (!video) return;
+
+            const videoList =
+                gameplayData[gameId];
+
+            if (
+                !videoList ||
+                videoList.length === 0
+            ) return;
+
+
+            const newSource =
+                videoList[
+                    currentVideoIdx[gameId]
+                ];
+
+
+            /*
+             * Stop current video.
+             */
+            autoPauseVideo(video);
+
+
+            /*
+             * Change source.
+             */
+            video.src =
+                newSource;
+
+            video.dataset.currentSource =
+                newSource;
+
+            video.load();
+
+
+            /*
+             * Always keep mild volume.
+             */
+            video.volume =
+                DEFAULT_VIDEO_VOLUME;
+
+
+            /*
+             * Apply the SAME global mute state
+             * to every gameplay video.
+             */
+            setVideoMutedInternally(
+                video,
+                globalMuted
+            );
+
+
+            /*
+             * Mark this video as activated when the gameplay
+             * tab or arrow button is selected.
+             */
+            if (shouldPlay) {
+
+                video.dataset.userActivated =
+                    'true';
+
+            }
+
+
+            /*
+             * Check whether THIS EXACT MP4 was manually paused
+             * previously.
+             */
+            const memoryKey =
+                getVideoMemoryKey(video);
+
+            const wasManuallyPaused =
+                manualPauseMemory.get(
+                    memoryKey
+                ) === true;
+
+
+            /*
+             * If user manually paused this exact gameplay
+             * video before, don't automatically resume it.
+             */
+            if (
+                shouldPlay &&
+                !wasManuallyPaused
+            ) {
+
+                playVideo(video);
+
+            }
+
+        }
+
+
+        // ============================================================
+        // PREVIOUS GAMEPLAY VIDEO
+        // ============================================================
+
+        window.prevVideo =
+            function(gameId) {
+
+                if (
+                    !gameplayData[gameId]
+                ) return;
+
+                currentVideoIdx[gameId] =
+                    (
+                        currentVideoIdx[gameId] -
+                        1 +
+                        gameplayData[gameId].length
+                    ) %
+                    gameplayData[gameId].length;
+
+
+                loadGameplayVideo(
+                    gameId,
+                    true
+                );
+
+            };
+
+
+        // ============================================================
+        // NEXT GAMEPLAY VIDEO
+        // ============================================================
+
+        window.nextVideo =
+            function(gameId) {
+
+                if (
+                    !gameplayData[gameId]
+                ) return;
+
+                currentVideoIdx[gameId] =
+                    (
+                        currentVideoIdx[gameId] +
+                        1
+                    ) %
+                    gameplayData[gameId].length;
+
+
+                loadGameplayVideo(
+                    gameId,
+                    true
+                );
+
+            };
+
+
+        // ============================================================
+        // VIDEO EVENT LISTENERS
+        // ============================================================
+
+        function setupVideoStateListeners(video) {
+
+            if (!video) return;
+
+
+            /*
+             * Initial volume.
+             */
+            video.volume =
+                DEFAULT_VIDEO_VOLUME;
+
+
+            /*
+             * Initial mute state.
+             */
+            setVideoMutedInternally(
+                video,
+                globalMuted
+            );
+
+
+            // --------------------------------------------------------
+            // PAUSE EVENT
+            // --------------------------------------------------------
+
+            video.addEventListener(
+                'pause',
+                () => {
+
+                    /*
+                     * Ignore pause caused by our automatic system.
+                     */
+                    if (
+                        internalPauseEvents.has(
+                            video
+                        )
+                    ) {
+
+                        internalPauseEvents.delete(
+                            video
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * Anything else is treated as a genuine
+                     * user pause.
+                     */
+                    if (
+                        video.dataset.userActivated ===
+                        'true'
+                    ) {
+
+                        setManualPauseState(
+                            video,
+                            true
+                        );
+
+                    }
+
+                }
+            );
+
+
+            // --------------------------------------------------------
+            // PLAY EVENT
+            // --------------------------------------------------------
+
+            video.addEventListener(
+                'play',
+                () => {
+
+                    /*
+                     * A real play means the user has resumed
+                     * the video.
+                     */
+                    if (
+                        video.dataset.userActivated ===
+                        'true'
+                    ) {
+
+                        setManualPauseState(
+                            video,
+                            false
+                        );
+
+                    }
+
+                }
+            );
+
+
+            // --------------------------------------------------------
+            // VOLUMECHANGE EVENT
+            // --------------------------------------------------------
+
+            video.addEventListener(
+                'volumechange',
+                () => {
+
+                    /*
+                     * Ignore changes made by our automatic
+                     * scrolling/global synchronization system.
+                     */
+                    if (
+                        internalMuteEvents.has(
+                            video
+                        )
+                    ) {
+
+                        internalMuteEvents.delete(
+                            video
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                     * The native browser mute/unmute button
+                     * was manually used by the user.
+                     */
+                    globalMuted =
+                        video.muted;
+
+
+                    /*
+                     * Sync the same mute state to every video.
+                     *
+                     * This is why:
+                     *
+                     * Mute Video 1
+                     *     ↓
+                     * Global button becomes muted
+                     *     ↓
+                     * Video 2 starts muted
+                     */
+                    applyGlobalMuteToAllVideos();
+
+
+                    updateGlobalMuteButton();
+
+                }
+            );
+
+        }
+
+
+        // ============================================================
+        // GLOBAL MUTE BUTTON
+        // ============================================================
+
+        function setupGlobalMuteButton() {
+
+            const button =
+                document.getElementById(
+                    'global-video-mute'
+                );
+
+            if (!button) return;
+
+
+            button.addEventListener(
+                'click',
+                (event) => {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    /*
+                     * Toggle overall mute state.
+                     */
+                    globalMuted =
+                        !globalMuted;
+
+
+                    /*
+                     * Apply the new state everywhere.
+                     */
+                    applyGlobalMuteToAllVideos();
+
+
+                    /*
+                     * Update button icon.
+                     */
+                    updateGlobalMuteButton();
+
+                }
+            );
+
+
+            /*
+             * Initial state = UNMUTED.
+             */
+            globalMuted =
+                false;
+
+            updateGlobalMuteButton();
+
+        }
+
+
+        // ============================================================
+        // STOP ALL VIDEOS
+        // ============================================================
+
+        function stopAllVideos() {
+
+            document
+                .querySelectorAll(
+                    '.portfolio-video'
+                )
+                .forEach(video => {
+
+                    /*
+                     * Only automatically pause.
+                     *
+                     * We DO NOT erase the manual pause memory.
+                     */
+                    autoPauseVideo(video);
+
+                    /*
+                     * We DO NOT permanently change global mute state.
+                     *
+                     * Manual mute choice remains controlled by
+                     * globalMuted.
+                     */
+
+                });
+
+        }
+
+
+        // ============================================================
+        // ACTIVATE VIDEO FROM TAB
+        // ============================================================
+
+        function activateVideo(video) {
+
+            if (!video) return;
+
+
+            video.dataset.userActivated =
+                'true';
+
+
+            /*
+             * Always restore the global mute state.
+             */
+            setVideoMutedInternally(
+                video,
+                globalMuted
+            );
+
+
+            video.volume =
+                DEFAULT_VIDEO_VOLUME;
+
+
+            /*
+             * Don't override a manual pause.
+             */
+            if (
+                getManualPauseState(video)
+            ) {
+
+                return;
+
+            }
+
+
+            playVideo(video);
+
+        }
+
+
+        // ============================================================
+        // FIND VIDEO INSIDE TAB
+        // ============================================================
+
+        function getVideoInsideContent(
+            content
+        ) {
+
+            if (!content) return null;
+
+            return content.querySelector(
+                '.portfolio-video'
+            );
+
+        }
+
+
+        // ============================================================
+        // DOM READY
+        // ============================================================
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            () => {
+
+
+                // ====================================================
+                // 1. INTERACTIVE WATER EFFECT
+                // ====================================================
+
+                const heroName =
+                    document.getElementById(
+                        'hero-name'
+                    );
+
+                const waterTurbulence =
+                    document.getElementById(
+                        'water-turbulence'
+                    );
+
+                const waterDisplacement =
+                    document.getElementById(
+                        'water-displacement'
+                    );
+                
+                let isNameHovered =
+                    false;
+
+                let waterScale =
+                    0;
+
+                let frameCount =
+                    0;
+
+                let renderWaterId;
+
+
+                function renderWater() {
+
+                    if (
+                        isNameHovered
+                    ) {
+
+                        waterScale +=
+                            (
+                                15 -
+                                waterScale
+                            ) *
+                            0.1;
+
+                        frameCount +=
+                            0.05;
+
+                    } else {
+
+                        waterScale +=
+                            (
+                                0 -
+                                waterScale
+                            ) *
+                            0.1;
+
+                    }
+
+
+                    if (
+                        waterScale >
+                        0.1 ||
+                        isNameHovered
+                    ) {
+
+                        waterDisplacement.setAttribute(
+                            'scale',
+                            waterScale
+                        );
+
+                        waterTurbulence.setAttribute(
+                            'baseFrequency',
+                            `0.01 ${0.03 + Math.sin(frameCount) * 0.01}`
+                        );
+
+                        renderWaterId =
+                            requestAnimationFrame(
+                                renderWater
+                            );
+
+                    } else {
+
+                        waterDisplacement.setAttribute(
+                            'scale',
+                            0
+                        );
+
+                        heroName.classList.remove(
+                            'water-effect-active'
+                        );
+
+                        cancelAnimationFrame(
+                            renderWaterId
+                        );
+
+                    }
+
+                }
+
+
+                heroName.addEventListener(
+                    'mouseenter',
+                    () => {
+
+                        if (
+                            !isNameHovered
+                        ) {
+
+                            isNameHovered =
+                                true;
+
+                            heroName.classList.add(
+                                'water-effect-active'
+                            );
+
+                            renderWater();
+
+                        }
+
+                    }
+                );
+
+
+                heroName.addEventListener(
+                    'mouseleave',
+                    () => {
+
+                        isNameHovered =
+                            false;
+
+                    }
+                );
+
+
+                // ====================================================
+                // 2. ROCKET LAUNCH BUTTON
+                // ====================================================
+
+                const rocketBtn =
+                    document.getElementById(
+                        'rocket-launch-btn'
+                    );
+                
+                rocketBtn.addEventListener(
+                    'click',
+                    (e) => {
+
+                        e.preventDefault();
+
+                        if (
+                            rocketBtn.classList.contains(
+                                'launching'
+                            )
+                        ) {
+
+                            return;
+
+                        }
+                        
+                        rocketBtn.classList.add(
+                            'launching'
+                        );
+                        
+                        setTimeout(
+                            () => {
+
+                                const targetId =
+                                    rocketBtn.getAttribute(
+                                        'href'
+                                    );
+
+                                document
+                                    .querySelector(
+                                        targetId
+                                    )
+                                    .scrollIntoView({
+                                        behavior:
+                                            'smooth'
+                                    });
+
+                            },
+                            400
+                        ); 
+                        
+                        setTimeout(
+                            () => {
+
+                                rocketBtn.classList.remove(
+                                    'launching'
+                                );
+
+                            },
+                            1500
+                        ); 
+
+                    }
+                );
+
+
+                // ====================================================
+                // 3. INITIALIZE ALL VIDEOS
+                // ====================================================
+
+                document
+                    .querySelectorAll(
+                        '.portfolio-video'
+                    )
+                    .forEach(
+                        video => {
+
+                            video.volume =
+                                DEFAULT_VIDEO_VOLUME;
+
+                            setupVideoStateListeners(
+                                video
+                            );
+
+                        }
+                    );
+
+
+                // ====================================================
+                // 4. TAB SYSTEM
+                // ====================================================
+
+                const projectCards =
+                    document.querySelectorAll(
+                        '.project-card'
+                    );
+
+
+                projectCards.forEach(
+                    card => {
+
+                        const tabs =
+                            card.querySelectorAll(
+                                '.tab-btn'
+                            );
+
+                        const contents =
+                            card.querySelectorAll(
+                                '.tab-content'
+                            );
+
+
+                        tabs.forEach(
+                            tab => {
+
+                                tab.addEventListener(
+                                    'click',
+                                    () => {
+
+                                        /*
+                                         * Stop currently playing
+                                         * videos, but don't destroy
+                                         * manual pause state.
+                                         */
+                                        stopAllVideos();
+
+
+                                        tabs.forEach(
+                                            t =>
+                                                t.classList.remove(
+                                                    'active-tab'
+                                                )
+                                        );
+
+
+                                        contents.forEach(
+                                            c =>
+                                                c.classList.add(
+                                                    'hidden'
+                                                )
+                                        );
+
+
+                                        tab.classList.add(
+                                            'active-tab'
+                                        );
+
+
+                                        const targetId =
+                                            tab.getAttribute(
+                                                'data-target'
+                                            );
+
+
+                                        const contentEl =
+                                            card.querySelector(
+                                                `#${targetId}`
+                                            );
+
+
+                                        if (
+                                            contentEl
+                                        ) {
+
+                                            contentEl.classList.remove(
+                                                'hidden'
+                                            );
+
+
+                                            const video =
+                                                getVideoInsideContent(
+                                                    contentEl
+                                                );
+
+
+                                            if (
+                                                video
+                                            ) {
+
+                                                /*
+                                                 * Gameplay video.
+                                                 */
+                                                if (
+                                                    video.dataset.videoType ===
+                                                    'gameplay'
+                                                ) {
+
+                                                    const gameId =
+                                                        video.dataset.gameId;
+
+
+                                                    if (
+                                                        gameId
+                                                    ) {
+
+                                                        loadGameplayVideo(
+                                                            gameId,
+                                                            true
+                                                        );
+
+                                                    }
+
+                                                }
+
+
+                                                /*
+                                                 * Trailer video.
+                                                 */
+                                                else {
+
+                                                    activateVideo(
+                                                        video
+                                                    );
+
+                                                }
+
+                                            }
+
+                                        }
+
+                                    }
+                                );
+
+                            }
+                        );
+
+                    });
+
+
+                // ====================================================
+                // 5. GLOBAL MUTE BUTTON
+                // ====================================================
+
+                setupGlobalMuteButton();
+
+
+                // ====================================================
+                // 6. INITIALIZE GAMEPLAY SOURCES
+                // ====================================================
+
+                Object.keys(
+                    gameplayData
+                ).forEach(
+                    gameId => {
+
+                        /*
+                         * Load first source.
+                         *
+                         * Don't autoplay because its tab
+                         * is initially hidden.
+                         */
+                        loadGameplayVideo(
+                            gameId,
+                            false
+                        );
+
+                    }
+                );
+
+
+                // ====================================================
+                // 7. VIDEO VISIBILITY OBSERVER
+                // ====================================================
+
+                const videoObserver =
+                    new IntersectionObserver(
+                        (entries) => {
+
+                            entries.forEach(
+                                entry => {
+
+                                    const video =
+                                        entry.target;
+
+
+                                    /*
+                                     * VIDEO LEFT SCREEN
+                                     */
+                                    if (
+                                        !entry.isIntersecting
+                                    ) {
+
+                                        /*
+                                         * Automatically pause.
+                                         *
+                                         * Manual pause memory is NOT changed.
+                                         */
+                                        autoPauseVideo(
+                                            video
+                                        );
+
+
+                                        /*
+                                         * Automatically mute while
+                                         * outside the viewport.
+                                         *
+                                         * This is temporary and DOES NOT
+                                         * modify globalMuted.
+                                         */
+                                        setVideoMutedInternally(
+                                            video,
+                                            true
+                                        );
+
+
+                                        return;
+
+                                    }
+
+
+                                    /*
+                                     * VIDEO RETURNED TO SCREEN
+                                     */
+
+                                    if (
+                                        video.dataset.userActivated !==
+                                        'true'
+                                    ) {
+
+                                        /*
+                                         * User has never opened this
+                                         * video tab, so do nothing.
+                                         */
+                                        return;
+
+                                    }
+
+
+                                    /*
+                                     * Restore global mute state.
+                                     */
+                                    setVideoMutedInternally(
+                                        video,
+                                        globalMuted
+                                    );
+
+
+                                    video.volume =
+                                        DEFAULT_VIDEO_VOLUME;
+
+
+                                    /*
+                                     * Restore manual pause state.
+                                     */
+                                    if (
+                                        getManualPauseState(
+                                            video
+                                        )
+                                    ) {
+
+                                        /*
+                                         * User manually paused it.
+                                         *
+                                         * KEEP IT PAUSED.
+                                         */
+                                        return;
+
+                                    }
+
+
+                                    /*
+                                     * User had not manually paused it.
+                                     *
+                                     * Resume playback.
+                                     */
+                                    playVideo(
+                                        video
+                                    );
+
+                                }
+                            );
+
+                        },
+                        {
+                            root: null,
+                            rootMargin: '0px',
+                            threshold: 0.35
+                        }
+                    );
+
+
+                document
+                    .querySelectorAll(
+                        '.portfolio-video'
+                    )
+                    .forEach(
+                        video => {
+
+                            videoObserver.observe(
+                                video
+                            );
+
+                        }
+                    );
+
+
+                // ====================================================
+                // 8. VIDEO END HANDLING
+                // ====================================================
+
+                document
+                    .querySelectorAll(
+                        '.portfolio-video'
+                    )
+                    .forEach(
+                        video => {
+
+                            video.addEventListener(
+                                'ended',
+                                () => {
+
+                                    /*
+                                     * Trailer stops.
+                                     */
+                                    if (
+                                        video.dataset.videoType ===
+                                        'trailer'
+                                    ) {
+
+                                        autoPauseVideo(
+                                            video
+                                        );
+
+                                        return;
+
+                                    }
+
+
+                                    /*
+                                     * Gameplay automatically goes
+                                     * to next gameplay video.
+                                     */
+                                    if (
+                                        video.dataset.videoType ===
+                                        'gameplay'
+                                    ) {
+
+                                        const gameId =
+                                            video.dataset.gameId;
+
+
+                                        if (
+                                            gameId &&
+                                            gameplayData[gameId]
+                                        ) {
+
+                                            currentVideoIdx[
+                                                gameId
+                                            ] =
+                                                (
+                                                    currentVideoIdx[
+                                                        gameId
+                                                    ] +
+                                                    1
+                                                ) %
+                                                gameplayData[
+                                                    gameId
+                                                ].length;
+
+
+                                            loadGameplayVideo(
+                                                gameId,
+                                                true
+                                            );
+
+                                        }
+
+                                    }
+
+                                }
+                            );
+
+                        }
+                    );
+
+
+                // ====================================================
+                // 9. KEYBOARD ARROW CONTROLS
+                // ====================================================
+
+                document.addEventListener(
+                    'keydown',
+                    (event) => {
+
+                        const activeElement =
+                            document.activeElement;
+
+
+                        /*
+                         * Don't interfere with typing.
+                         */
+                        if (
+                            activeElement &&
+                            (
+                                activeElement.tagName ===
+                                'INPUT' ||
+                                activeElement.tagName ===
+                                'TEXTAREA' ||
+                                activeElement.tagName ===
+                                'SELECT'
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        /*
+                         * Find active gameplay video.
+                         */
+                        const activeGameplay =
+                            document.querySelector(
+                                '.tab-content:not(.hidden) .gameplay-video'
+                            );
+
+
+                        if (
+                            !activeGameplay
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const gameId =
+                            activeGameplay.dataset.gameId;
+
+
+                        if (!gameId) return;
+
+
+                        /*
+                         * LEFT ARROW
+                         */
+                        if (
+                            event.key ===
+                            'ArrowLeft'
+                        ) {
+
+                            /*
+                             * Don't hijack native video controls
+                             * if the video itself is focused.
+                             */
+                            if (
+                                activeElement &&
+                                activeElement.tagName ===
+                                'VIDEO'
+                            ) {
+
+                                return;
+
+                            }
+
+                            event.preventDefault();
+
+                            prevVideo(
+                                gameId
+                            );
+
+                        }
+
+
+                        /*
+                         * RIGHT ARROW
+                         */
+                        if (
+                            event.key ===
+                            'ArrowRight'
+                        ) {
+
+                            if (
+                                activeElement &&
+                                activeElement.tagName ===
+                                'VIDEO'
+                            ) {
+
+                                return;
+
+                            }
+
+                            event.preventDefault();
+
+                            nextVideo(
+                                gameId
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                // ====================================================
+                // 10. SMOOTH SCROLLING
+                // ====================================================
+
+                document
+                    .querySelectorAll(
+                        'a.scroll-link'
+                    )
+                    .forEach(
+                        anchor => {
+
+                            anchor.addEventListener(
+                                'click',
+                                function(e) {
+
+                                    e.preventDefault();
+
+
+                                    document
+                                        .querySelector(
+                                            this.getAttribute(
+                                                'href'
+                                            )
+                                        )
+                                        .scrollIntoView({
+                                            behavior:
+                                                'smooth'
+                                        });
+                                    
+                                    document
+                                        .querySelectorAll(
+                                            '.scroll-link'
+                                        )
+                                        .forEach(
+                                            link =>
+                                                link.classList.remove(
+                                                    'active'
+                                                )
+                                        );
+
+
+                                    this.classList.add(
+                                        'active'
+                                    );
+
+                                }
+                            );
+
+                        }
+                    );
+            
+
+                // ====================================================
+                // 11. SECTION OBSERVER
+                // ====================================================
+
+                const sections =
+                    document.querySelectorAll(
+                        'section'
+                    );
+
+
+                const navLinks =
+                    document.querySelectorAll(
+                        '.scroll-link'
+                    );
+            
+
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.3
+                };
+
+
+                const observer =
+                    new IntersectionObserver(
+                        (entries) => {
+
+                            entries.forEach(
+                                entry => {
+
+                                    if (
+                                        entry.isIntersecting
+                                    ) {
+
+                                        navLinks.forEach(
+                                            link => {
+
+                                                link.classList.remove(
+                                                    'active'
+                                                );
+
+
+                                                if (
+                                                    link.getAttribute(
+                                                        'href'
+                                                    ) ===
+                                                    `#${entry.target.id}`
+                                                ) {
+
+                                                    link.classList.add(
+                                                        'active'
+                                                    );
+
+                                                }
+
+                                            }
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+                        },
+                        observerOptions
+                    );
+
+
+                sections.forEach(
+                    section =>
+                        observer.observe(
+                            section
+                        )
+                );
+
+
+                // ====================================================
+                // 12. BROWSER TAB VISIBILITY
+                // ====================================================
+
+                document.addEventListener(
+                    'visibilitychange',
+                    () => {
+
+                        if (
+                            document.visibilityState ===
+                            'hidden'
+                        ) {
+
+                            document
+                                .querySelectorAll(
+                                    '.portfolio-video'
+                                )
+                                .forEach(
+                                    video => {
+
+                                        /*
+                                         * Pause automatically.
+                                         *
+                                         * Manual pause memory remains untouched.
+                                         */
+                                        autoPauseVideo(
+                                            video
+                                        );
+
+
+                                        /*
+                                         * Temporarily mute.
+                                         *
+                                         * Do NOT change globalMuted.
+                                         */
+                                        setVideoMutedInternally(
+                                            video,
+                                            true
+                                        );
+
+                                    }
+                                );
+
+                        }
+
+                    }
+                );
+
+
+                // ====================================================
+                // 13. FINAL GLOBAL STATE
+                // ====================================================
+
+                /*
+                 * Explicitly start unmuted.
+                 */
+                globalMuted =
+                    false;
+
+
+                updateGlobalMuteButton();
+
+
+                /*
+                 * Keep all videos at 25%.
+                 */
+                document
+                    .querySelectorAll(
+                        '.portfolio-video'
+                    )
+                    .forEach(
+                        video => {
+
+                            video.volume =
+                                DEFAULT_VIDEO_VOLUME;
+
+                            setVideoMutedInternally(
+                                video,
+                                false
+                            );
+
+                        }
+                    );
+
+            }
+        );
+
+    </script>
+</body>
+</html>
