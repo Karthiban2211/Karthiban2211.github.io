@@ -106,21 +106,32 @@
             transform: translateY(1200px);
         }
 
-        .launching .rocket-flame {
-            opacity: 1 !important;
-            animation: flame-flicker 0.1s infinite alternate;
+        .motion-trails {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
         }
 
-        @keyframes flame-flicker {
-            0% {
-                filter: brightness(1) drop-shadow(0 0 5px #ff7a4d);
-                transform: scaleY(1);
-            }
+        .launching .motion-trails {
+            opacity: 1;
+        }
 
-            100% {
-                filter: brightness(1.5) drop-shadow(0 0 15px #ff0055);
-                transform: scaleY(1.3);
-            }
+        .trail-line {
+            position: absolute;
+            width: 2px;
+            border-radius: 2px;
+            animation: speed-streak 0.4s infinite linear;
+        }
+
+        .trail-line:nth-child(1) { left: 10px; bottom: 0; height: 50px; animation-delay: 0s; background: linear-gradient(to top, transparent, #4DC3FF, transparent); }
+        .trail-line:nth-child(2) { right: 10px; bottom: 10px; height: 70px; animation-delay: 0.1s; background: linear-gradient(to top, transparent, #ff0055, transparent); }
+        .trail-line:nth-child(3) { left: 25px; bottom: -10px; height: 40px; animation-delay: 0.2s; background: linear-gradient(to top, transparent, #FFC857, transparent); }
+        .trail-line:nth-child(4) { right: 25px; bottom: 5px; height: 60px; animation-delay: 0.15s; background: linear-gradient(to top, transparent, #B98BFF, transparent); }
+
+        @keyframes speed-streak {
+            0% { transform: translateY(20px) scaleY(0.5); opacity: 0; }
+            30% { opacity: 1; }
+            100% { transform: translateY(-60px) scaleY(1.5); opacity: 0; }
         }
 
         /* UI Elements */
@@ -175,7 +186,7 @@
         }
 
         /* ----------------------------------------------------
-           VIDEO SYSTEM
+            VIDEO SYSTEM
         ---------------------------------------------------- */
 
         .portfolio-video {
@@ -300,7 +311,6 @@
     <!-- Fixed Navigation -->
     <header class="fixed top-0 left-0 right-0 z-[100] bg-black/80 backdrop-blur-md border-b border-white/10 px-6 md:px-10 py-4 flex justify-between items-center">
         <a href="#home" class="font-bebas text-3xl tracking-[0.08em] text-white">KCM</a>
-        <!-- <a href="#home" class="font-bebas text-3xl tracking-[0.08em] text-white">KCM<span class="text-ap-yellow">®</span></a> -->
         
         <!-- Desktop Nav -->
         <nav class="hidden md:flex items-center gap-6 font-mono text-[11px] lg:text-xs tracking-[0.2em] uppercase">
@@ -311,7 +321,7 @@
             <a href="#about" class="nav-link scroll-link">ABOUT</a>
 
             <!-- Resume Link -->
-            <a href="Resume_23_09.pdf" target="_blank" class="nav-link text-ap-cyan hover:text-white flex items-center gap-1">
+            <a href="assets/Karthiban_Resume_24_09.pdf" target="_blank" class="nav-link text-ap-cyan hover:text-white flex items-center gap-1">
                 RESUME 
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M7 17l9.2-9.2M17 17V7H7"/>
@@ -383,28 +393,24 @@
             <a href="#professional" id="rocket-launch-btn" class="group mt-16 flex flex-col items-center justify-center gap-4 decoration-none">
 
                 <!-- Circular Border -->
-                <div class="relative w-20 h-20 border border-gray-600 rounded-full flex items-center justify-center bg-transparent group-hover:border-ap-red transition-all shadow-none group-hover:shadow-[0_0_20px_rgba(255,0,85,0.2)]">
+                <div class="relative w-20 h-20 border border-gray-600 rounded-full flex items-center justify-center bg-transparent group-hover:border-ap-red transition-all shadow-none group-hover:shadow-[0_0_20px_rgba(255,0,85,0.3)]">
                     
                     <!-- Outer wrapper translates down -->
                     <div class="rocket-outer-wrapper absolute inset-0 flex items-center justify-center z-10">
 
-                        <!-- Inner wrapper points the rocket downwards (180deg) -->
-                        <div class="rocket-inner transform rotate-180 flex flex-col items-center relative">
+                        <div class="rocket-inner flex flex-col items-center justify-center relative w-full h-full">
 
-                            <!-- Standard Upright Rocket Vector -->
-                            <svg class="rocket-svg text-gray-300 group-hover:text-ap-red w-8 h-8 transition-colors relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
-                                <path d="m12 15-3-3a22 22 0 0 1 3.81-12.56c.35-.49.9-.49 1.25 0A22 22 0 0 1 17.87 9c.14.3.18.63.13.95l-.13.84"></path>
-                                <path d="M19 11c1 1.13 4 5 4 5s-3.74.5-5 2"></path>
-                                <path d="M9 13.5v5"></path>
-                                <path d="M15 15v5"></path>
-                            </svg>
+                            <!-- Motion Trails -->
+                            <div class="motion-trails absolute inset-0">
+                                <div class="trail-line"></div>
+                                <div class="trail-line"></div>
+                                <div class="trail-line"></div>
+                                <div class="trail-line"></div>
+                            </div>
+                            
+                            <!-- Character Image -->
+                            <img src="assets/images/Be_Prepared.png" alt="Hero Character" class="w-16 h-16 object-contain relative z-10 transition-transform group-hover:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
 
-                            <!-- Fire Thruster Vector -->
-                            <svg class="rocket-flame absolute -bottom-6 opacity-0 w-6 h-8 origin-top text-orange-500 transition-opacity duration-200 z-0" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 22C12 22 7 15 7 10C7 5 12 0 12 0C12 0 17 5 17 10C17 15 12 22 12 22Z" fill="#ff7a4d"/>
-                                <path d="M12 18C12 18 9 13 9 9C9 5 12 3 12 3C12 3 15 5 15 9C15 13 12 18 12 18Z" fill="#FFC857"/>
-                            </svg>
                         </div>
                     </div>
                 </div>
@@ -556,7 +562,13 @@
             <div class="p-8 min-h-[200px] bg-[#111314]">
 
                 <div id="pro-overview" class="tab-content hidden text-gray-300 text-sm md:text-base leading-relaxed max-w-4xl">
-                    <p>BabyVR is an urban action-adventure FPS VR project featuring open-world exploration, objective-based missions, and interactive environments. I contributed as a Freelance VR Game Developer from September 2025 to May 2026, developing and optimizing immersive VR gameplay using Unity and C#, with modular systems for environmental interactions and world immersion.</p>
+                    <p>BabyVR is an urban action-adventure FPS VR project built around open-world exploration, objective-based missions, and interactive environments.</p>
+                    <br>
+                    <p>My work focused on implementing and maintaining gameplay systems that connect the VR player, interactive objects, environmental triggers, audio events, objectives, and gameplay UI.</p>
+                    <br>
+                    <p>I worked on dynamic chaos-level system, object spawning and object management, VR interactions, physics-driven object behaviour, trigger-based gameplay events, spatial audio triggers, and gameplay controls.</p>
+                    <br>
+                    <p>I also worked with several existing VR and gameplay packages, integrating their functionality into the project's systems and debugging issues across the gameplay implementation.</p>
                 </div>
 
                 <div id="pro-trailer" class="tab-content hidden">
@@ -586,31 +598,33 @@
                 </div>
 
                 <div id="pro-tech" class="tab-content">
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-                        <div>
-                            <h4 class="font-bebas text-2xl text-white mb-4">CORE SYSTEMS</h4>
-
-                            <ul class="font-mono text-sm text-gray-400 space-y-2 list-disc pl-4 mb-6">
-                                <li>Immersive VR gameplay, environment interactions, and objective-based missions</li>
-                                <li>Open-world exploration systems and trigger-based events</li>
-                                <li>Spatial audio triggers and physics-driven object interactions</li>
-                                <li>VR gameplay optimization using Unity and C#</li>
-                            </ul>
-
-                            <!-- <img src="image_15ee66.jpg" alt="Xenofables Systems" class="w-full border border-gray-700 rounded shadow-lg"> -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border border-white/5 bg-black/40 p-6 hover:border-[#B98BFF]/30 transition-colors">
+                            <h4 class="font-bebas text-xl md:text-2xl text-[#B98BFF] mb-3 tracking-wide">VR INTERACTION</h4>
+                            <p class="font-sans text-sm text-gray-400 leading-relaxed">Worked with VR interaction systems, physics-based object interactions, hand/object interaction behaviour, and player-environment interaction.</p>
                         </div>
-
-                        <div>
-                            <!-- <h4 class="font-bebas text-2xl text-white mb-4">GALLERY</h4> -->
-                            <!-- <img src="image_15ee89.jpg" alt="Xenofables Gallery" class="w-full border border-gray-700 rounded shadow-lg"> -->
+                        <div class="border border-white/5 bg-black/40 p-6 hover:border-[#B98BFF]/30 transition-colors">
+                            <h4 class="font-bebas text-xl md:text-2xl text-[#B98BFF] mb-3 tracking-wide">OBJECT SYSTEMS</h4>
+                            <p class="font-sans text-sm text-gray-400 leading-relaxed">Implemented object spawning and object management for gameplay interactions and interactive environments.</p>
                         </div>
-
+                        <div class="border border-white/5 bg-black/40 p-6 hover:border-[#B98BFF]/30 transition-colors">
+                            <h4 class="font-bebas text-xl md:text-2xl text-[#B98BFF] mb-3 tracking-wide">EVENT SYSTEMS</h4>
+                            <p class="font-sans text-sm text-gray-400 leading-relaxed">Implemented a dynamic chaos-level system and trigger-based gameplay events connecting player actions with environmental and gameplay responses.</p>
+                        </div>
+                        <div class="border border-white/5 bg-black/40 p-6 hover:border-[#B98BFF]/30 transition-colors">
+                            <h4 class="font-bebas text-xl md:text-2xl text-[#B98BFF] mb-3 tracking-wide">AUDIO</h4>
+                            <p class="font-sans text-sm text-gray-400 leading-relaxed">Implemented spatial audio trigger behaviour for interactive gameplay and environmental events.</p>
+                        </div>
+                        <div class="border border-white/5 bg-black/40 p-6 hover:border-[#B98BFF]/30 transition-colors">
+                            <h4 class="font-bebas text-xl md:text-2xl text-[#B98BFF] mb-3 tracking-wide">GAMEPLAY UI</h4>
+                            <p class="font-sans text-sm text-gray-400 leading-relaxed">Developed the main game UI and watch UI, implementing their controls including real-time updates for mission objectives and progress, restart, play/pause, and volume controls.</p>
+                        </div>
+                        <div class="border border-white/5 bg-black/40 p-6 hover:border-[#B98BFF]/30 transition-colors">
+                            <h4 class="font-bebas text-xl md:text-2xl text-[#B98BFF] mb-3 tracking-wide">PACKAGES</h4>
+                            <p class="font-sans text-sm text-gray-400 leading-relaxed">VRIF, BNG, GorillaLocomotion, PhysicsHands, PoolBoss, MEC, and Behavior Designer.</p>
+                        </div>
                     </div>
-
-                    <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-8 tracking-widest md:hidden">VIEW PROJECT ▸</button>
-
+                    <!-- <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-8 tracking-widest md:hidden">VIEW PROJECT ▸</button> -->
                 </div>
             </div>
         </div>
@@ -663,9 +677,11 @@
                 <div class="p-8 min-h-[200px] bg-[#0c0506]">
 
                     <div id="conf-overview" class="tab-content text-gray-300 text-sm md:text-base leading-relaxed max-w-4xl">
-                        <p class="mb-4"><span class="text-[#ff0055] font-semibold">Project Confusion</span> is a highly advanced action-system prototype featuring custom state-machine AI, kinematic physics, and an interactive environment.</p>
-                        <p>Currently in active development, the focus is on establishing a robust, modular code foundation allowing for rapidly scalable combat encounters and dynamic environmental shifting.</p>
-                        <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button>
+                        <p class="mb-4">Confusion is a real-time multiplayer runner-and-catcher game currently in development.</p>
+                        <p class="mb-4">The project is built around a complete multiplayer flow from <span class="text-[#ff0055]">Main Menu → Lobby → Game</span>, with players connecting through Unity Multiplayer Services, Lobby, Relay, and Netcode for GameObjects.</p>
+                        <p class="mb-4">The gameplay uses dynamic catcher assignment, catch interactions, shuffled player identities, role changes, and synchronized gameplay state.</p>
+                        <p>I am developing the multiplayer architecture and gameplay systems, including networked player spawning, movement and animation synchronization, server-authoritative gameplay, player identity handling, and networked game-state management.</p>
+                        <!-- <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button> -->
                     </div>
 
                     <div id="conf-trailer" class="tab-content hidden">
@@ -693,11 +709,38 @@
                     </div>
 
                     <div id="conf-tech" class="tab-content hidden">
-                        <ul class="list-disc pl-5 font-mono text-sm text-gray-400 space-y-2">
-                            <li>Netcode for GameObjects (NGO) with Unity Multiplayer Services</li>
-                            <li>Lobby and Relay connectivity with NetworkVariables and RPCs</li>
-                            <li>Networked player movement, animation and multiplayer synchronization</li>
-                        </ul>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Card 1 -->
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#ff0055]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#ff0055] mb-3 tracking-wide">MULTIPLAYER SERVICES</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Unity Multiplayer Services, Lobby, Relay, Authentication, and Netcode for GameObjects are used for the multiplayer connection flow.</p>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#ff0055]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#ff0055] mb-3 tracking-wide">NETWORKING</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">NetworkVariables, RPCs, networked player spawning, movement synchronization, animation synchronization, and client/server communication.</p>
+                            </div>
+                            <!-- Card 3 -->
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#ff0055]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#ff0055] mb-3 tracking-wide">PLAYER SYSTEMS</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Networked player identities, player-name handling, shuffled display aliases, networked movement, synchronized animation, and private role delivery.</p>
+                            </div>
+                            <!-- Card 4 -->
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#ff0055]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#ff0055] mb-3 tracking-wide">GAMEPLAY LOGIC</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Random initial catcher assignment, catcher transfer through touch interactions, player selection, role changes, and synchronized gameplay state.</p>
+                            </div>
+                            <!-- Card 5 -->
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#ff0055]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#ff0055] mb-3 tracking-wide">MULTIPLAYER FLOW</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Main Menu to Lobby to Game flow, lobby player management, host/client connection flow, game start conditions, and networked scene transition.</p>
+                            </div>
+                            <!-- Card 6 -->
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#ff0055]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#ff0055] mb-3 tracking-wide">UI SYSTEMS</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Main Menu UI, Lobby UI, player lists, host controls, player selection UI, and gameplay role/notification UI.</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="conf-gameplay" class="tab-content hidden">
@@ -770,9 +813,10 @@
                 <div class="p-8 min-h-[200px] bg-[#060a0f]">
 
                     <div id="cluck-overview" class="tab-content text-gray-300 text-sm md:text-base leading-relaxed max-w-4xl">
-                        <p class="mb-4">CheckMate: Crown and Conquer is a stylized 3D chess game featuring animated, character-based pieces with unique attack styles.</p>
-                        <p><span class="text-[#4DC3FF] font-semibold">What makes it different:</span> implemented chess rules, legal movement, capturing, turn and victory logic, along with custom visual and interaction systems for animated gameplay.</p>
-                        <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button>
+                        <p class="mb-4">CheckMate: Crown and Conquer is a stylized 3D chess game where traditional chess pieces are represented by animated character-based pieces with unique attack styles.</p>
+                        <p class="mb-4">The project focused heavily on gameplay logic, including legal move validation, piece movement, capturing, turn management, and victory conditions.</p>
+                        <p>I also built supporting systems for move and path validation, piece interactions, character animation, and dynamic gameplay camera behaviour.</p>
+                        <!-- <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button> -->
                     </div>
 
                     <div id="cluck-trailer" class="tab-content hidden">
@@ -800,7 +844,32 @@
                     </div>
 
                     <div id="cluck-tech" class="tab-content hidden">
-                        <p class="font-mono text-gray-400">Chess rules, legal move validation and victory conditions; modular move validation, pathfinding and capturing logic; Unity Animator for animated character-based chess pieces; Cinemachine and custom camera scripts for gameplay tracking; custom scripts for visual and interaction systems.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#4DC3FF]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#4DC3FF] mb-3 tracking-wide">CHESS RULES</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Implemented legal chess movement, move validation, capturing, turn flow, and victory conditions.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#4DC3FF]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#4DC3FF] mb-3 tracking-wide">MOVE VALIDATION</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Built modular move and path validation systems to determine whether pieces can move to selected positions.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#4DC3FF]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#4DC3FF] mb-3 tracking-wide">PIECE INTERACTION</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Implemented piece movement, capturing, interaction logic, and gameplay responses.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#4DC3FF]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#4DC3FF] mb-3 tracking-wide">CHARACTER ANIMATION</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Used Unity Animator to control animated character-based chess pieces and their gameplay actions.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#4DC3FF]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#4DC3FF] mb-3 tracking-wide">CAMERA SYSTEM</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Used Cinemachine and custom camera logic for gameplay camera tracking and presentation.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#4DC3FF]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#4DC3FF] mb-3 tracking-wide">CODE STRUCTURE</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Separated gameplay responsibilities into modular C# systems for movement, validation, interaction, and game flow.</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="cluck-gameplay" class="tab-content hidden">
@@ -873,9 +942,10 @@
                 <div class="p-8 min-h-[200px] bg-[#110e06]">
 
                     <div id="gl-overview" class="tab-content text-gray-300 text-sm md:text-base leading-relaxed max-w-4xl">
-                        <p class="mb-4">BladeFall is a 2D top-down shooting game made in Unity for PC, featuring player-versus-enemy combat.</p>
-                        <p><span class="text-[#FFC857] font-semibold">What makes it different:</span> focused on core gameplay programming, including player and enemy movement, projectile shooting, combat, animations, and health systems.</p>
-                        <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button>
+                        <p class="mb-4">BladeFall is a 2D top-down shooter built in Unity for PC, focused on player-versus-enemy combat.</p>
+                        <p class="mb-4">The project explored core gameplay systems including player and enemy movement, projectile shooting, combat interactions, health management, animation, and gameplay UI.</p>
+                        <p>The project provided hands-on experience connecting multiple real-time gameplay systems through C#.</p>
+                        <!-- <button class="play-game-btn font-bebas text-lg px-6 py-2 mt-6 tracking-widest md:hidden">VIEW PROJECT ▸</button> -->
                     </div>
 
                     <div id="gl-trailer" class="tab-content hidden">
@@ -903,7 +973,32 @@
                     </div>
 
                     <div id="gl-tech" class="tab-content hidden">
-                        <p class="font-mono text-gray-400">Player and enemy movement implemented in C#; projectile shooting and combat systems; player and enemy animation systems; health management for player and enemy; dynamic health bars.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#FFC857]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#FFC857] mb-3 tracking-wide">PLAYER SYSTEM</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Implemented player movement, shooting, health, and gameplay interactions.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#FFC857]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#FFC857] mb-3 tracking-wide">ENEMY SYSTEM</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Implemented enemy movement, combat behaviour, health, and animation.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#FFC857]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#FFC857] mb-3 tracking-wide">PROJECTILES</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Built projectile shooting and combat interactions between the player and enemies.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#FFC857]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#FFC857] mb-3 tracking-wide">HEALTH SYSTEM</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Implemented player and enemy health management with dynamic health bar feedback.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#FFC857]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#FFC857] mb-3 tracking-wide">ANIMATION</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Connected gameplay states with player and enemy animation behaviour.</p>
+                            </div>
+                            <div class="border border-white/5 bg-black/40 p-6 hover:border-[#FFC857]/30 transition-colors">
+                                <h4 class="font-bebas text-xl md:text-2xl text-[#FFC857] mb-3 tracking-wide">GAMEPLAY UI</h4>
+                                <p class="font-sans text-sm text-gray-400 leading-relaxed">Added dynamic health bars and gameplay feedback UI.</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="gl-gameplay" class="tab-content hidden">
@@ -955,9 +1050,21 @@
             
             <div class="font-sans text-gray-300 leading-relaxed space-y-4 md:text-lg">
 
-                <p>I am a Unity Game Developer and Gameplay Programmer focused on building interactive game systems with C#. My work spans 2D, 3D, VR, and multiplayer development, with an emphasis on gameplay logic, player interaction, animation, physics, and modular code.</p>
+                <p>I'm a Unity Game Developer and Gameplay Programmer focused on building the systems that make a game playable — movement, interaction, combat, game rules, player behaviour, animation, physics, UI, and multiplayer gameplay.</p>
 
-                <p>When I'm not building gameplay systems or debugging code, I enjoy analyzing game mechanics, exploring new development patterns, and turning ideas into interactive experiences.</p>
+                <p>My project experience covers several areas of game development. In 2D development, I worked on player and enemy movement, projectile shooting, combat, health, animation, and gameplay UI. In 3D development, I explored rule-driven systems, move validation, piece interactions, character animation, turn management, and camera systems.</p>
+
+                <p>My professional VR work with Xenofables expanded this into VR interaction, physics-driven objects, dynamic chaos-level system, object spawning and management, trigger-based gameplay events, spatial audio, environment interaction, and gameplay UI.</p>
+
+                <p>I'm currently developing Confusion, a multiplayer project using Netcode for GameObjects and Unity Multiplayer Services. The project involves Lobby and Relay, networked player spawning, synchronized movement and animation, NetworkVariables, RPCs, player identity handling, dynamic catcher roles, and server-authoritative gameplay.</p>
+
+                <p>Core skills:
+
+                   Unity | C# | Gameplay Programming | Multiplayer Networking | NGO | Unity Multiplayer Services | Lobby | Relay | RPCs | NetworkVariables | VR | 2D/3D Game Development
+                </p>
+                <p>
+                   Open to: Unity Game Developer, Junior Game Developer, Associate Game Developer, Gameplay Programmer opportunities in Chennai, Bengaluru, Coimbatore, and remote/hybrid roles.
+                </p>
 
             </div>
             
@@ -980,8 +1087,8 @@
                 </div>
 
                 <div class="border border-white/5 p-4 bg-black/30 text-center">
-                    <span class="text-gray-500 block mb-1">STATUS</span>
-                    <span class="text-[#6EE7C8]">BUILDING</span>
+                    <span class="text-gray-500 block mb-1">SKILLS</span>
+                    <span class="text-[#6EE7C8]">UPGRADING</span>
                 </div>
 
             </div>
@@ -997,7 +1104,7 @@
         </p>
     </div>
 
-       
+        
     <!-- FOOTER & CONTACT -->
     <footer class="relative z-10 border-t border-white/10 py-8 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center bg-black/80 gap-6">
 
